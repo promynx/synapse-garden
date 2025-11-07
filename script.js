@@ -41,3 +41,18 @@ function loop(){
   requestAnimationFrame(loop);
 }
 loop();
+
+function plant(x,y,type){
+  const hue = (Date.now()/10) % 360;
+  const color = `hsl(${hue},80%,60%)`;
+  organisms.push(new Organism(x,y,color,type));
+}
+
+canvas.addEventListener('click', e => plant(e.clientX, e.clientY, 'circle'));
+canvas.addEventListener('mousemove', e => {
+  if (Math.random() < 0.05) plant(e.clientX, e.clientY, 'square');
+});
+document.addEventListener('keydown', e => {
+  if (Math.random() < 0.3) plant(random(0,canvas.width), random(0,canvas.height), 'circle');
+});
+setInterval(() => plant(random(0,canvas.width), random(0,canvas.height), 'square'), 5000);
